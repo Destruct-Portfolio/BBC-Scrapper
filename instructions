@@ -1,0 +1,31 @@
+Write a node.js scraper to scrape the following data from https://www.bbc.co.uk/news 6 times between 6am and Midnight UK time every day.
+
+Scrape the following data from every new article on the page:
+
+- Article link
+- Article headline text
+- Article image URL (if there is one)
+- Article published time and date
+- Article excerpt text (if there is one)
+- Article author (if there is one)
+- Article category (if there is one)
+
+You can ignore all the articles in the "Best of BBC section".
+
+Store the data in a JSON file in a new object for each day.
+
+Update the data for the current day 6 times.
+
+Please can you add the script to my Vultr account:
+
+https://my.vultr.com/
+Username: chrisjb@gmail.com
+Password: GrogerPower9
+
+Once you have the script running, please send me the URL of the JSON file.
+
+Thank you
+
+///Solution
+first Selector ===== > div.gel-layout**item.nw-c-top-stories**secondary-item
+seccond Selector ==== > div.gel-layout**item.nw-c-top-stories**tertiary-items
