@@ -41,16 +41,16 @@ export class BBC {
     });
 
     this._client.on("close", () => {
-      // ...
+      this._logger.info("shutting down server and client");
     });
   }
 
   private async _scarpe() {
     await this._client!.goto(this._source);
-    console.log("am there");
     await this._client!.waitForLoad("DomContentLoaded");
-    fs.writeFileSync("ting.jpeg", await this._client!.takeScreenshot());
+    fs.writeFileSync("page.jpeg", await this._client!.takeScreenshot());
 
+    this._logger.info("page loaded starting scraping ... ");
     let FirstRows = await this._client!.document.querySelectorAll(
       "div.gel-layout__item.nw-c-top-stories__secondary-item"
     ).$map(async (item) => {
@@ -83,28 +83,35 @@ export class BBC {
   }
 
   private async _getAuthors() {
+    this._logger.info("Getting Authors ...");
     for (var article of this._payload) {
       await this._client!.goto(article.link!);
       let author = await this._client!.querySelector(
         "#main-content > div.ssrcss-1ocoo3l-Wrap.e42f8511 > div > div.ssrcss-rgov1k-MainColumn.e1sbfw0p0 > article > div.ssrcss-1bdte2-BylineComponentWrapper.e8mq1e90 > div > div > div.ssrcss-1dtr1ls-Container-ContributorDetails.e8mq1e913 > div.ssrcss-68pt20-Text-TextContributorName.e8mq1e96"
       );
       if (author === null) {
-        console.log(article.link + " ::: " + null);
+        //       console.log(article.link + " ::: " + null);
         article.author = null;
       } else {
-        console.log(article.link + " ::: " + author);
+        //        console.log(article.link + " ::: " + author);
         article.author = await author.innerText;
       }
     }
   }
 
+  private async _clearnup() {
+    await this._client!.close();
+    await this._server!.close();
+  }
+
   public async _exec() {
     this._logger.info("Starting Scraping ... ");
-    this._logger.info("INTIALIZING HERO");
+    this._logger.info("starting hero server and client ... ");
     await this._setup();
     if (this._client !== null) {
       await this._scarpe();
       await this._getAuthors();
+      await this._clearnup();
       return this._payload;
     } else {
       this._logger.error("Hero Failed to launch");

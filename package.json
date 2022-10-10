@@ -1,12 +1,13 @@
 {
-  "name": "bbc_scrapper",
+  "name": "bbc_News_scrapper",
   "version": "1.0.0",
   "description": "6X scrapper for www.bbc.co.uk/new ",
   "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "rimraf dist/* && tsc && cd dist && node index.js"
+    "start": "rimraf dist/* && tsc && cd dist && node index.js",
+    "roll": "rimraf dist/* && tsc && cd dist && node"
   },
   "repository": {
     "type": "git",
@@ -25,9 +26,13 @@
     "@ulixee/server": "^2.0.0-alpha.12",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.21",
+    "node-schedule": "^2.1.0",
     "puppeteer": "^18.2.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.8.4",
     "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@types/node-schedule": "^2.1.0"
   }
 }
