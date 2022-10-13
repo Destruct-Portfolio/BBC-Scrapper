@@ -16,7 +16,7 @@ const TimeConfig = new schedule.RecurrenceRule();
 
 TimeConfig.dayOfWeek = [0, new schedule.Range(0, 6)];
 
-TimeConfig.hour = [6, 9, 13, 18, 23];
+TimeConfig.hour = [0, new schedule.Range(0, 23)];
 
 TimeConfig.minute = 0;
 
@@ -24,3 +24,5 @@ TimeConfig.minute = 0;
 var job = schedule.scheduleJob(TimeConfig, async () => {
   await Index.start();
 });
+
+//await Index.start();
