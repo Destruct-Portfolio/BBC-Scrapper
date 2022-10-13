@@ -77,7 +77,7 @@ export class BBC {
 
         author: null,
 
-        published: published ? await published.innerText : null,
+        published: published ? this.getTime(await published.innerText) : null,
       });
     });
 
@@ -112,6 +112,8 @@ export class BBC {
 
   getTime(time: string) {
     let parts = time.split(" ");
+    if (parts.length > 1) {
+    }
     return moment().subtract(`${parts[0]}, ${parts[1]}`).toString();
   }
 
