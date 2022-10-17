@@ -64,12 +64,14 @@ export class BBC {
 
       let published = await item.querySelector("li > span > time > span");
 
+      let img = await item.querySelector("img");
+
       this._payload.push({
         link: await item.querySelector("a").href,
 
         headline: headline ? await headline.innerText : null,
 
-        image_url: await item.querySelector("img").src,
+        image_url: img ? await img.src : null,
 
         excerpt: excerpt ? await excerpt.innerText : null,
 
@@ -92,12 +94,14 @@ export class BBC {
 
       let published = await item.querySelector("li > span > time > span");
 
+      let img = await item.querySelector("img");
+
       this._payload.push({
         link: await item.querySelector("a").href,
 
         headline: headline ? await headline.innerText : null,
 
-        image_url: await item.querySelector("img").src,
+        image_url: img ? await img.src : null,
 
         excerpt: excerpt ? await excerpt.innerText : null,
 
@@ -114,7 +118,7 @@ export class BBC {
     let parts = time.split(" ");
     if (parts.length > 1) {
     }
-    return moment().subtract(`${parts[0]}, ${parts[1]}`).toString();
+    return moment().subtract(`${parts[0]}, ${parts[1]}`).toISOString();
   }
 
   private async _getAuthors() {

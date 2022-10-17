@@ -24,5 +24,3 @@ TimeConfig.minute = 0;
 var job = schedule.scheduleJob(TimeConfig, async () => {
   await Index.start();
 });
-
-//await Index.start();
