@@ -1,4 +1,3 @@
-/** @format */
 import express from "express";
 import Locals from "./local.js";
 import Routes from "./router.js";

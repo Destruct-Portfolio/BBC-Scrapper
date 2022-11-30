@@ -1,5 +1,3 @@
-/** @format */
-
 import { Application } from "express";
 import Http from "./http.js";
 

@@ -1,5 +1,3 @@
-/** @format */
-
 import { Application } from "express";
 import dotenv from "dotenv";
 import path from "path";

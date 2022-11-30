@@ -1,5 +1,3 @@
-/** @format */
-import Log from "../middlewares/log.js";
 import Express from "./express.js";
 import dotenv from "dotenv";
 import path from "path";
@@ -10,11 +8,12 @@ class App {
   }
   public LoadConfiguration(): void {
     const dirname = path.dirname("../.env");
-    Log.info("Configuration :: Booting @ Server...");
+    console.log("configuration :: Booting @ Server");
+
     dotenv.config({ path: path.join(dirname) });
   }
   public LoadServer(): void {
-    Log.info("server :: Booting @ Server");
+    console.log("server :: Booting @ Server");
     Express.init();
   }
 }
