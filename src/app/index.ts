@@ -20,7 +20,7 @@ TimeConfig.hour = [0, new schedule.Range(0, 23)];
 
 TimeConfig.minute = 0;
 
-await Index.start();
+//await Index.start();
 
 //lights
 var job = schedule.scheduleJob(TimeConfig, async () => {
