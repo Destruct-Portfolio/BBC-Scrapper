@@ -4,11 +4,12 @@ export class Json_getter {
   private outputpath: string;
 
   constructor() {
-    this.outputpath = "../bank";
+    this.outputpath = "./bank";
   }
 
   public async GetFile(date: string) {
-    let frr = await fs.readFileSync(`${this.outputpath}/${date}`);
+    let t = date.toUpperCase();
+    let frr = await fs.readFileSync(`${this.outputpath}/${t}.json`);
     let data = JSON.parse(frr.toString());
     return data;
   }
