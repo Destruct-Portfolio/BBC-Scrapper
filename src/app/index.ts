@@ -6,8 +6,7 @@ import schedule from "node-schedule";
 //Igniter
 class Index {
   public static async start() {
-    let scraped_news = await new Handler().execute();
-    await new DB_Handler(scraped_news!)._exec();
+    await new Handler();
   }
 }
 

@@ -1,56 +1,40 @@
-import { BBC } from "../components/bbc_scrapper.js";
-import { FT_scrapper } from "../components/ft_scrapper.js";
-import { TheGuardian } from "../components/guardian.js";
-
-import Logger from "../misc/logger.js";
+import BBC from "../components/bbc_scrapper.js";
+import FT_scrapper from "../components/ft_scrapper.js";
+import TheGuardian from "../components/guardian.js";
+import Ny_Times from "../components/ny_times.js";
+import { DB_Handler } from "./db_handler.js";
+import Washington from "../components/washington.js";
+import BloombergNewsScrapper from "../components/bloomberg.js";
 
 import { Inews, JsonFile } from "../types/index.js";
 
 export class Handler {
   //private logger: Logger;
+  private static scrapers = [
+    BBC,
+    FT_scrapper,
+    TheGuardian,
+    Ny_Times,
+    Washington,
+    BloombergNewsScrapper
+  ]
 
-  private BBC_scrapper: BBC;
-  private FT_scrapper: FT_scrapper;
-  private Guardian_scrapper: TheGuardian;
+  /*   private static payload = [
+      BBC: [] = []
+    ] */
 
-  private payload: JsonFile;
 
-  constructor() {
-    this.BBC_scrapper = new BBC();
-
-    this.FT_scrapper = new FT_scrapper();
-
-    this.Guardian_scrapper = new TheGuardian();
-
-    this.payload = {
-      Bbc_News: [],
-
-      FT_News: [],
-
-      Guardian_News: [],
-    };
-  }
-
-  public async execute() {
+  public static async Start() {
+    let Scrapers: JsonFile[] = []
     try {
-      const BBC = await this.BBC_scrapper._exec();
-      console.log("---------------BBC-------------");
-      //console.log(BBC);
-      this.payload.Bbc_News = BBC!;
+      for (const scraper of Handler.scrapers) {
+        let data = await new scraper().exec()
+        Scrapers[`${scraper}`]
+      }
 
-      const FT_scrapper = await this.FT_scrapper._exec();
-      console.log("---------------FT-------------");
-      //console.log(FT_scrapper);
-      this.payload.FT_News = FT_scrapper!;
-
-      const TheGuardian = await this.Guardian_scrapper.exec();
-      console.log("-----------Guardian----------");
-      //console.log(TheGuardian);
-      this.payload.Guardian_News = TheGuardian;
-
-      return this.payload;
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
+
 }

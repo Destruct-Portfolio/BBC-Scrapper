@@ -18,7 +18,7 @@ export class DB_Handler {
   }
 
   private async verify_folders() {
-    let Files = await fs.readdirSync(this.outputPath);
+    let Files = fs.readdirSync(this.outputPath);
     console.log(Files);
 
     let exists: string[] | boolean = Files.filter((item) => {

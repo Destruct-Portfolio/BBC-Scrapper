@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 797addfe65cdd14743d134ba2b53a4614bf75b0a
 import Hero from '@ulixee/hero'
 import Server from '@ulixee/server'
 import { Inews } from '../types'

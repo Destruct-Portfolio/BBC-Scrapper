@@ -1,14 +1,14 @@
 import Hero from "@ulixee/hero";
-
 import Server from "@ulixee/server";
-
 import fs from "fs";
-
 import { Inews } from "../types";
-
 import Logger from "../misc/logger.js";
 
+<<<<<<< HEAD
 export class FT_scrapper {
+=======
+export default class FT_scrapper {
+>>>>>>> 797addfe65cdd14743d134ba2b53a4614bf75b0a
   private _client: Hero | null;
 
   private _server: Server | null;
@@ -145,7 +145,11 @@ export class FT_scrapper {
       return this._payload;
     } else {
       this._logger.error("Hero Failed to launch");
+<<<<<<< HEAD
       return this._payload;
+=======
+      return this._payload
+>>>>>>> 797addfe65cdd14743d134ba2b53a4614bf75b0a
     }
 
   }

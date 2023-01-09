@@ -18,7 +18,7 @@ namespace TheGuardian {
   }
 }
 
-export class TheGuardian {
+export default class TheGuardian {
   private _client: Hero | null;
   private _server: Server | null;
 
@@ -138,8 +138,8 @@ export class TheGuardian {
 
           author = author
             ? await this._client.document.querySelector(
-                "body > main > article > div > div > aside.dcr-1aul2ye > div > div > div > div.dcr-fj5ypv > div > address > div"
-              )?.innerText
+              "body > main > article > div > div > aside.dcr-1aul2ye > div > div > div > div.dcr-fj5ypv > div > address > div"
+            )?.innerText
             : null;
 
           let published: boolean | string =
@@ -149,8 +149,8 @@ export class TheGuardian {
 
           published = published
             ? await this._client.document.querySelector(
-                "body > main > article > div > div > aside.dcr-1aul2ye > div > div > div > div.dcr-fj5ypv > div > details > summary"
-              )?.innerText
+              "body > main > article > div > div > aside.dcr-1aul2ye > div > div > div > div.dcr-fj5ypv > div > details > summary"
+            )?.innerText
             : null;
 
           const category = link.pathname.split("/")[1];
