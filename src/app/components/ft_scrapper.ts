@@ -7,13 +7,6 @@ import fs from "fs";
 import { Inews } from "../types";
 
 import Logger from "../misc/logger.js";
-/**
- * TODO scrape the articles at the top,
- * TODO the article under "Top Stories",
- * TODO the articles under "News",
- * TODO the articles under "Market News",
- * TODO the articles under "Technology".
- */
 
 export class FT_scrapper {
   private _client: Hero | null;
@@ -138,7 +131,7 @@ export class FT_scrapper {
     await this._server!.close();
   }
 
-  public async _exec() {
+  public async exec() {
     this._logger.info("Starting Scraping ... ");
 
     this._logger.info("starting hero server and client ... ");
@@ -152,6 +145,8 @@ export class FT_scrapper {
       return this._payload;
     } else {
       this._logger.error("Hero Failed to launch");
+      return this._payload;
     }
+
   }
 }

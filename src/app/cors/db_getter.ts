@@ -14,13 +14,4 @@ export class Json_getter {
     return data;
   }
 
-  /*   public async GetMultipleJsonData(dates: string[]) {
-    let data = [];
-    for (let index = 0; index < dates.length; index++) {
-      const element = dates[index];
-      let frr = await fs.readFileSync(`${this.outputpath}/${dates[index]}`);
-      let data = JSON.parse(frr.toString());
-        
-    }
-  } */
 }

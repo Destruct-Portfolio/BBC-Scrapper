@@ -143,7 +143,7 @@ export class BBC {
     await this._server!.close();
   }
 
-  public async _exec() {
+  public async exec(): Promise<Inews[]> {
     this._logger.info("Starting Scraping ... ");
 
     this._logger.info("starting hero server and client ... ");
@@ -159,6 +159,7 @@ export class BBC {
       return this._payload;
     } else {
       this._logger.error("Hero Failed to launch");
+      return this._payload
     }
   }
 }
