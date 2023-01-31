@@ -44,14 +44,7 @@ export default class Ny_Times {
                     })
                 }
             })
-            Save.SaveFile({
-                Washington: this.payload,
-                Bbc_News: [],
-                FT_News: [],
-                Guardian_News: [],
-                Ny_Times: [],
-                BloomBerg: []
-            })
+
             return this.payload
         } catch (error) {
             console.log(error)

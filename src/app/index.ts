@@ -11,7 +11,7 @@ class Index {
 }
 
 //Time Config
-/* const TimeConfig = new schedule.RecurrenceRule();
+const TimeConfig = new schedule.RecurrenceRule();
 
 TimeConfig.dayOfWeek = [0, new schedule.Range(0, 6)];
 
@@ -25,6 +25,6 @@ TimeConfig.minute = 0;
 var job = schedule.scheduleJob(TimeConfig, async () => {
   await Index.start();
 });
- */
+
 
 await Index.start()
