@@ -2,6 +2,7 @@
 import NewsScrapper from "./scraper.js"
 
 import { ISuperNode } from "@ulixee/hero"
+import Save from "../cors/save.js"
 
 export default class BloombergNewsScrapper extends NewsScrapper {
     public static siteURL = 'https://www.bloomberg.com'
@@ -96,8 +97,15 @@ export default class BloombergNewsScrapper extends NewsScrapper {
                 })
             }
 
-            console.log(this.$payload)
-            /*   return this.$payload */
+            Save.SaveFile({
+                BloomBerg: this.$payload,
+                Bbc_News: [],
+                FT_News: [],
+                Guardian_News: [],
+                Washington: [],
+                Ny_Times: []
+            })
+
         }
 
     }

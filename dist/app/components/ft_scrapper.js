@@ -2,14 +2,8 @@ import Hero from "@ulixee/hero";
 import Server from "@ulixee/server";
 import fs from "fs";
 import Logger from "../misc/logger.js";
-/**
- * TODO scrape the articles at the top,
- * TODO the article under "Top Stories",
- * TODO the articles under "News",
- * TODO the articles under "Market News",
- * TODO the articles under "Technology".
- */
-export class FT_scrapper {
+import Save from "../cors/save.js";
+export default class FT_scrapper {
     _client;
     _server;
     _logger;
@@ -97,17 +91,26 @@ export class FT_scrapper {
         await this._client.close();
         await this._server.close();
     }
-    async _exec() {
+    async exec() {
         this._logger.info("Starting Scraping ... ");
         this._logger.info("starting hero server and client ... ");
         await this._setup();
         if (this._client !== null) {
             await this._scarpe();
             await this._clearnup();
+            Save.SaveFile({
+                Bbc_News: [],
+                FT_News: this._payload,
+                Guardian_News: [],
+                Washington: [],
+                Ny_Times: [],
+                BloomBerg: []
+            });
             return this._payload;
         }
         else {
             this._logger.error("Hero Failed to launch");
+            return this._payload;
         }
     }
 }

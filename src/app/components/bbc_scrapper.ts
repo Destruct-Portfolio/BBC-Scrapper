@@ -1,5 +1,4 @@
 import Hero from "@ulixee/hero";
-
 import Server from "@ulixee/server";
 
 import fs from "fs";
@@ -9,6 +8,7 @@ import { Inews } from "../types";
 import Logger from "../misc/logger.js";
 
 import moment from "moment";
+import Save from "../cors/save.js";
 
 export default class BBC {
   private _client: Hero | null;
@@ -35,10 +35,10 @@ export default class BBC {
 
   private async _setup() {
     this._server = new Server();
-    await this._server.listen({ port: 8080 });
+    await this._server.listen({ port: 8081 });
     this._client = new Hero({
       connectionToCore: {
-        host: `ws://localhost:${8080}`,
+        host: `ws://localhost:${8081}`,
       },
     });
 
@@ -124,16 +124,15 @@ export default class BBC {
   private async _getAuthors() {
     this._logger.info("Getting Authors ...");
     for (var article of this._payload) {
-      await this._client!.goto(article.link!);
+      try {
+        await this._client!.goto(article.link!);
 
-      let author = this._client!.querySelector(
-        "#main-content > div.ssrcss-1ocoo3l-Wrap.e42f8511 > div > div.ssrcss-rgov1k-MainColumn.e1sbfw0p0 > article > div.ssrcss-1bdte2-BylineComponentWrapper.e8mq1e90 > div > div > div.ssrcss-1dtr1ls-Container-ContributorDetails.e8mq1e913 > div.ssrcss-68pt20-Text-TextContributorName.e8mq1e96"
-      );
-
-      if (author === null) {
-        article.author = null;
-      } else {
-        article.author = (await author.innerText).substring(3);
+        let author = this._client!.querySelector(
+          "#main-content > div.ssrcss-1ocoo3l-Wrap.e42f8511 > div > div.ssrcss-rgov1k-MainColumn.e1sbfw0p0 > article > div.ssrcss-1bdte2-BylineComponentWrapper.e8mq1e90 > div > div > div.ssrcss-1dtr1ls-Container-ContributorDetails.e8mq1e913 > div.ssrcss-68pt20-Text-TextContributorName.e8mq1e96"
+        );
+        article.author = await author.$exists ? await author.innerText : null
+      } catch (error) {
+        article.author = null
       }
     }
   }
@@ -143,13 +142,8 @@ export default class BBC {
     await this._server!.close();
   }
 
-<<<<<<< HEAD
   public async exec(): Promise<Inews[]> {
-=======
-  public async exec() {
->>>>>>> 797addfe65cdd14743d134ba2b53a4614bf75b0a
     this._logger.info("Starting Scraping ... ");
-
     this._logger.info("starting hero server and client ... ");
 
     await this._setup();

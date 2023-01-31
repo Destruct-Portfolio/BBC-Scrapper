@@ -3,12 +3,9 @@ import Server from "@ulixee/server";
 import fs from "fs";
 import { Inews } from "../types";
 import Logger from "../misc/logger.js";
+import Save from "../cors/save.js";
 
-<<<<<<< HEAD
-export class FT_scrapper {
-=======
 export default class FT_scrapper {
->>>>>>> 797addfe65cdd14743d134ba2b53a4614bf75b0a
   private _client: Hero | null;
 
   private _server: Server | null;
@@ -141,15 +138,18 @@ export default class FT_scrapper {
       await this._scarpe();
 
       await this._clearnup();
-
+      Save.SaveFile({
+        Bbc_News: [],
+        FT_News: this._payload,
+        Guardian_News: [],
+        Washington: [],
+        Ny_Times: [],
+        BloomBerg: []
+      })
       return this._payload;
     } else {
       this._logger.error("Hero Failed to launch");
-<<<<<<< HEAD
-      return this._payload;
-=======
       return this._payload
->>>>>>> 797addfe65cdd14743d134ba2b53a4614bf75b0a
     }
 
   }

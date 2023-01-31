@@ -4,7 +4,8 @@ import Hero from "@ulixee/hero";
 import Server from "@ulixee/server";
 import axios from "axios";
 import cheerio from "cheerio";
-export class TheGuardian {
+import Save from "../cors/save.js";
+export default class TheGuardian {
     _client;
     _server;
     payload;
@@ -130,6 +131,14 @@ export class TheGuardian {
             console.log("Hero client failed to start.");
         }
         await this._cleanup();
+        Save.SaveFile({
+            Bbc_News: [],
+            FT_News: [],
+            Guardian_News: this.payload,
+            Washington: [],
+            Ny_Times: [],
+            BloomBerg: []
+        });
         return this.payload;
     }
 }

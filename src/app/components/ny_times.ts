@@ -1,5 +1,6 @@
 import { Inews } from "../types"
 import axios from "axios"
+import Save from "../cors/save.js"
 
 
 export default class Ny_Times {
@@ -43,6 +44,14 @@ export default class Ny_Times {
                     })
                 }
             })
+            /*            Save.SaveFile({
+                           Bbc_News: [],
+                           FT_News: [],
+                           Guardian_News: [],
+                           Washington: [],
+                           Ny_Times: this.payload,
+                           BloomBerg: []
+                       }) */
             return this.payload
         } catch (error) {
             console.log(error)

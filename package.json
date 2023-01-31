@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && cd dist && node app/index.js",
-    "server": "rimraf dist/* && tsc && cd dist && node server/index.js",
+    "server": "cd dist && nodemon server/index.js",
     "roll": "rimraf dist/* && tsc && cd dist && node"
   },
   "author": "Destruct",
@@ -25,6 +25,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "node-schedule": "^2.1.0",
+    "nodemon": "^2.0.20",
     "puppeteer": "^18.2.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.8.4",

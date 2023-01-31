@@ -14,7 +14,7 @@ export class DB_Handler {
         this.outputPath = "../bank";
     }
     async verify_folders() {
-        let Files = await fs.readdirSync(this.outputPath);
+        let Files = fs.readdirSync(this.outputPath);
         console.log(Files);
         let exists = Files.filter((item) => {
             if (item == `${this.Today}.json`) {

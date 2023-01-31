@@ -5,6 +5,7 @@ import Hero from "@ulixee/hero";
 import Server from "@ulixee/server";
 import axios from "axios";
 import cheerio from "cheerio";
+import Save from "../cors/save.js";
 
 namespace TheGuardian {
   export interface News {
@@ -186,6 +187,15 @@ export default class TheGuardian {
     }
 
     await this._cleanup();
+    Save.SaveFile({
+      Bbc_News: [],
+      FT_News: [],
+      Guardian_News: this.payload,
+      Washington: [],
+      Ny_Times: [],
+      BloomBerg: []
+    })
     return this.payload;
+
   }
 }

@@ -12,15 +12,9 @@ export interface JsonFile {
   Bbc_News: Inews[];
   FT_News: Inews[];
   Guardian_News: Inews[];
-<<<<<<< HEAD
-  BloomBerg: Inews[];
-  Ny_Times: Inews[];
-  Washington_Post: Inews[];
-=======
   Washington: Inews[];
   Ny_Times: Inews[];
   BloomBerg: Inews[]
->>>>>>> 797addfe65cdd14743d134ba2b53a4614bf75b0a
 }
 
 

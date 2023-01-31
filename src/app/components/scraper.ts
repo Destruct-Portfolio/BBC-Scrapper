@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 797addfe65cdd14743d134ba2b53a4614bf75b0a
 import Hero from '@ulixee/hero'
 import Server from '@ulixee/server'
+import Save from '../cors/save'
 import { Inews } from '../types'
 
 export default class NewsScrapper {
@@ -49,7 +46,6 @@ export default class NewsScrapper {
         await this.$setup()
         await this.$extract()
         await this.$cleanup()
-
         return this.$payload
     }
 }
