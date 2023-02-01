@@ -3,6 +3,7 @@ import NewsScrapper from "./scraper.js"
 
 import { ISuperNode } from "@ulixee/hero"
 import Save from "../cors/save.js"
+import moment from "moment"
 
 export default class BloombergNewsScrapper extends NewsScrapper {
     public static siteURL = 'https://www.bloomberg.com'
@@ -34,6 +35,13 @@ export default class BloombergNewsScrapper extends NewsScrapper {
     constructor() {
         super()
 
+    }
+
+    getTime(time: string) {
+        let parts = time.split(" ");
+        if (parts.length > 1) {
+        }
+        return moment().subtract(`${parts[0]}, ${parts[1]}`).toISOString();
     }
 
     protected async $extract() {
@@ -91,7 +99,7 @@ export default class BloombergNewsScrapper extends NewsScrapper {
                     link: BloombergNewsScrapper.siteURL + headline.link,
                     author: author,
                     category: category,
-                    published: published,
+                    published: published ? this.getTime(published) : null,
                     excerpt: excerpt,
                     image_url: image_url
                 })

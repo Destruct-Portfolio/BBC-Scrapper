@@ -4,10 +4,12 @@ import Hero from "@ulixee/hero";
 import Server from "@ulixee/server";
 import axios from "axios";
 import cheerio from "cheerio";
-import Save from "../cors/save.js";
+import Logger from "../misc/logger.js";
+import moment from "moment";
 export default class TheGuardian {
     _client;
     _server;
+    _logger;
     payload;
     source;
     static _exclusionList = [
@@ -28,9 +30,11 @@ export default class TheGuardian {
         this._client = null;
         this._server = null;
         this.payload = [];
+        this._logger = new Logger('TheGuardian', 'SCRAPPER');
         this.source = "https://www.theguardian.com/uk";
     }
     async fetchArticlesLinks() {
+        this._logger.info('Collecting ArticlesLinks');
         // Grab the HTML body
         let page = await axios.get(this.source);
         const html = await page.data;
@@ -81,14 +85,21 @@ export default class TheGuardian {
             },
         });
         this._client.on("close", () => {
-            console.log("Closing the farm ...");
+            this._logger.info("shutting down server and client");
         });
     }
     async _cleanup() {
         await this._client.close();
         await this._server.close();
     }
+    getTime(time) {
+        let parts = time.split(" ");
+        if (parts.length > 1) {
+        }
+        return moment().subtract(`${parts[0]}, ${parts[1]}`).toISOString();
+    }
     async fetchMetadata() {
+        this._logger.info("Strating Scraping for each headline collected ... ");
         for (const [index, entry] of this.payload.entries()) {
             if (entry.link) {
                 const link = new URL(entry.link);
@@ -102,7 +113,7 @@ export default class TheGuardian {
                         : null;
                     let published = await this._client.document.querySelector("body > main > article > div > div > aside.dcr-1aul2ye > div > div > div > div.dcr-fj5ypv > div > details > summary")?.$exists;
                     published = published
-                        ? await this._client.document.querySelector("body > main > article > div > div > aside.dcr-1aul2ye > div > div > div > div.dcr-fj5ypv > div > details > summary")?.innerText
+                        ? this.getTime(await this._client.document.querySelector("body > main > article > div > div > aside.dcr-1aul2ye > div > div > div > div.dcr-fj5ypv > div > details > summary")?.innerText)
                         : null;
                     const category = link.pathname.split("/")[1];
                     // This makes sure that we only pick the name and not the honorifics or titles.
@@ -122,23 +133,15 @@ export default class TheGuardian {
     async exec() {
         await this._setup();
         if (this._client !== null) {
-            console.log("Fetching entries ...");
+            this._logger.info("Fetching entries ...");
             await this.fetchArticlesLinks();
-            console.log("Completing metadata");
+            this._logger.info("Completing metadata");
             await this.fetchMetadata();
         }
         else {
-            console.log("Hero client failed to start.");
+            this._logger.error('Hero client failed to start.');
         }
         await this._cleanup();
-        Save.SaveFile({
-            Bbc_News: [],
-            FT_News: [],
-            Guardian_News: this.payload,
-            Washington: [],
-            Ny_Times: [],
-            BloomBerg: []
-        });
         return this.payload;
     }
 }

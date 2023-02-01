@@ -77,10 +77,10 @@ class Handlers {
 
   }
 
-  public static LastWeek(req: Request, res: Response, next: Handler) {
+  public static async LastWeek(req: Request, res: Response, next: Handler) {
 
     try {
-      let files = Json_getter.GetLastWeek()
+      let files = await Json_getter.GetLastWeek()
       res.json({
         reports: files,
         number_of_days: files.length

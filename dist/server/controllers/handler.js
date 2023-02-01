@@ -72,9 +72,9 @@ class Handlers {
             }
         }
     }
-    static LastWeek(req, res, next) {
+    static async LastWeek(req, res, next) {
         try {
-            let files = Json_getter.GetLastWeek();
+            let files = await Json_getter.GetLastWeek();
             res.json({
                 reports: files,
                 number_of_days: files.length

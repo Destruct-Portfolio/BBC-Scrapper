@@ -30,10 +30,10 @@ export default class FT_scrapper {
     }
     async Top_stories_and_news(selectr) {
         let x1 = await this._client.querySelectorAll(selectr).$map(async (item) => {
-            let _link = await item.querySelectorAll("a")[2];
-            let _headline = await item.querySelectorAll("a")[2];
-            let _image_url = await item.querySelector("img");
-            let _category = await item.querySelectorAll("a")[1];
+            let _link = item.querySelectorAll("a")[2];
+            let _headline = item.querySelectorAll("a")[2];
+            let _image_url = item.querySelector("img");
+            let _category = item.querySelectorAll("a")[1];
             this._payload.push({
                 link: _link ? await _link.href : null,
                 headline: _headline ? await _headline.innerText : null,
@@ -46,16 +46,16 @@ export default class FT_scrapper {
         });
     }
     async Market_and_Tech(selector, category) {
-        let X2 = await this._client.querySelector(selector);
+        let X2 = this._client.querySelector(selector);
         let seections = await X2.querySelectorAll("div.story-group__article-wrapper").$map(async (item) => {
-            let image = await item.querySelector("img");
-            let _link = await item.querySelector("a");
-            let _headline = await item.querySelector("a");
+            let image = item.querySelector("img");
+            let _link = item.querySelector("a");
+            let _headline = item.querySelector("a");
             this._payload.push({
                 image_url: image ? await image.src : null,
                 link: _link ? await _link.href : null,
                 headline: _headline
-                    ? await this.format(await _headline.innerText)
+                    ? this.format(await _headline.innerText)
                     : null,
                 category: category,
                 author: null,

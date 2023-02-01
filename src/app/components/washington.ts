@@ -3,10 +3,11 @@ import axios from "axios"
 import Save from "../cors/save"
 
 
-export default class Ny_Times {
+export default class Washington {
     private APIKEY: string
     private source: string
     private payload: Inews[]
+
 
 
     SectionsToIgnore = [

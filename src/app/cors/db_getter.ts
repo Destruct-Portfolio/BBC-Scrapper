@@ -26,7 +26,7 @@ export class Json_getter {
     return J
   }
 
-  public static GetLastWeek() {
+  public static async GetLastWeek() {
     let date = new Date();
     let lastWeekDates = [];
     let options = {
@@ -37,24 +37,27 @@ export class Json_getter {
     };
 
     for (let i = 0; i < 7; i++) {
-      date.setDate(date.getDate() - 1);
-      //@ts-ignore
-      let dateString = date.toLocaleDateString('en-US', options).replace(/ /g, '_').replace(/,/g, '');
-      lastWeekDates.unshift(dateString);
-    }
-    console.log(lastWeekDates)
-    let files = []
-    let foundFiles = 0
-
-    for (const day of lastWeekDates) {
       try {
-        let frr = fs.readFileSync(`${Json_getter.outputpath}/${day}.json`);
-
-        files.push(JSON.parse(frr.toString()));
-      } catch (error) {
-
+        date.setDate(date.getDate() - 1);
+        //@ts-ignore
+        let dateString = date.toLocaleDateString('en-US', options).replace(/ /g, '_').replace(/,/g, '');
+        lastWeekDates.unshift(dateString);
+      } catch (error: any) {
+        console.log(error.status)
       }
     }
+    /*   console.log(lastWeekDates) */
+    let files: any = []
+
+
+    await lastWeekDates.map((day) => {
+      try {
+        let t = fs.readFileSync(`${Json_getter.outputpath}/${day}.json`)
+        files.push(JSON.parse(t.toString()))
+      } catch (error: any) {
+        console.log(error.message)
+      }
+    })
     return files
 
   }
