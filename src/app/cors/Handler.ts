@@ -11,12 +11,12 @@ import Save from "./save.js";
 export class Handler {
 
   private static scrapers = [
-    TheGuardian,
-    /* FT_scrapper,
-    BBC,
     Ny_Times,
     Washington,
-    BloombergNewsScrapper */
+    FT_scrapper,
+    BBC,
+    BloombergNewsScrapper,
+    TheGuardian
   ]
 
 
