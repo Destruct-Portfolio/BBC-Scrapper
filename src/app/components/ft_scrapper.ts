@@ -23,7 +23,7 @@ export default class FT_scrapper {
 
     this._server = null;
 
-    this._logger = new Logger("BBC", "SCRAPPER");
+    this._logger = new Logger("FT_scrapper", "SCRAPPER");
 
     this._payload = [];
   }
@@ -51,10 +51,10 @@ export default class FT_scrapper {
         let _category = item.querySelectorAll("a")[1];
 
         this._payload.push({
-          link: _link ? await _link.href : null,
-          headline: _headline ? await _headline.innerText : null,
-          image_url: _image_url ? await _image_url.src : null,
-          category: _category ? await _category.innerText : null,
+          link: await _link.$exists ? await _link.href : null,
+          headline: await _headline.$exists ? await _headline.innerText : null,
+          image_url: await _image_url.$exists ? await _image_url.src : null,
+          category: await _category.$exists ? await _category.innerText : null,
           author: null,
           excerpt: null,
           published: null,
@@ -73,9 +73,9 @@ export default class FT_scrapper {
       let _headline = item.querySelector("a");
 
       this._payload.push({
-        image_url: image ? await image.src : null,
-        link: _link ? await _link.href : null,
-        headline: _headline
+        image_url: await image.$exists ? await image.src : null,
+        link: await _link.$exists ? await _link.href : null,
+        headline: await _headline.$exists
           ? this.format(await _headline.innerText)
           : null,
         category: category,
@@ -138,15 +138,8 @@ export default class FT_scrapper {
       await this._scarpe();
 
       await this._clearnup();
-      Save.SaveFile({
-        Bbc_News: [],
-        FT_News: this._payload,
-        Guardian_News: [],
-        Washington: [],
-        Ny_Times: [],
-        BloomBerg: []
-      })
       return this._payload;
+
     } else {
       this._logger.error("Hero Failed to launch");
       return this._payload

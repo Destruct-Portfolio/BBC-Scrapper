@@ -1,13 +1,13 @@
-import TheGuardian from "../components/guardian.js";
+import FT_scrapper from "../components/ft_scrapper.js";
 import Save from "./save.js";
 export class Handler {
     static scrapers = [
-        TheGuardian,
-        /* FT_scrapper,
-        BBC,
-        Ny_Times,
-        Washington,
-        BloombergNewsScrapper */
+        /*     Ny_Times,
+            Washington, */
+        FT_scrapper,
+        /*   BBC,
+          BloombergNewsScrapper,
+          TheGuardian */
     ];
     static async Start() {
         let t = [];
