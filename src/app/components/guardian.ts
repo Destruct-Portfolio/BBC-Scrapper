@@ -139,9 +139,9 @@ export default class TheGuardian {
     for (const [index, entry] of this.payload.entries()) {
       if (entry.link) {
         const link = new URL(entry.link);
-        console.log(`Navigating to ${link.href}`);
+
         try {
-          await this._client.goto(link.href);
+          await this._client.goto(link.href, { timeoutMs: 0 });
           await this._client.waitForLoad("AllContentLoaded");
 
           let author: boolean | string =
@@ -169,15 +169,12 @@ export default class TheGuardian {
           const category = link.pathname.split("/")[1];
 
           // This makes sure that we only pick the name and not the honorifics or titles.
-          author = author.split(" ").slice(0, 2).join(" ");
+          author = author ? author.split(" ").slice(0, 2).join(" ") : null;
 
           this.payload[index].author = author;
-          this.payload[index].published = published;
+          this.payload[index].published = this.getTime(published);
           this.payload[index].category = category;
 
-          console.log(
-            `Author: ${author} | Category: ${category} | Published: ${published}`
-          );
         } catch (error) {
           /*  console.log(`${error}`); */
           continue;

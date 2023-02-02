@@ -1,11 +1,11 @@
 /* import StorageHandler from "src/utils/storage.js" */
 import NewsScrapper from "./scraper.js"
-
-import { ISuperNode } from "@ulixee/hero"
 import Save from "../cors/save.js"
 import moment from "moment"
+import Logger from "../misc/logger.js"
 
 export default class BloombergNewsScrapper extends NewsScrapper {
+    private Logger: Logger
     public static siteURL = 'https://www.bloomberg.com'
     private static selectors = {
         articles: 'article.story-package-module__story.mod-story, article.article-story, article.single-story-module__story.mod-story, article.story-list-story.mod-story, article.story-package-module__story.mod-story',
@@ -34,6 +34,7 @@ export default class BloombergNewsScrapper extends NewsScrapper {
 
     constructor() {
         super()
+        this.Logger = new Logger('BloomBerg', "SCRAPPER")
 
     }
 
@@ -45,6 +46,7 @@ export default class BloombergNewsScrapper extends NewsScrapper {
     }
 
     protected async $extract() {
+        this.Logger.info('Starting Scrapper ... ')
         if (this.$client) {
             const headlines: Pick<typeof this.$payload[number], "headline" | "link">[] = []
 
@@ -63,7 +65,7 @@ export default class BloombergNewsScrapper extends NewsScrapper {
             })
 
             main: for (const [index, headline] of headlines.entries()) {
-
+                this.Logger.info('Navigating for each Link ... ')
 
                 if (!headline.link!.includes("https:")) headline.link = BloombergNewsScrapper.siteURL + headline.link
                 await this.$client.goto(headline.link!)
@@ -104,15 +106,6 @@ export default class BloombergNewsScrapper extends NewsScrapper {
                     image_url: image_url
                 })
             }
-
-            Save.SaveFile({
-                BloomBerg: this.$payload,
-                Bbc_News: [],
-                FT_News: [],
-                Guardian_News: [],
-                Washington: [],
-                Ny_Times: []
-            })
 
         }
 

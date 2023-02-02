@@ -53,7 +53,7 @@ export default class Ny_Times {
                     })
                 }
             })
-            this.logger.info('Returning' + this.payload.length + "Article ...")
+            this.logger.info('Returning  ' + this.payload.length + "Article ...")
             return this.payload
         } catch (error) {
             console.log(error)
