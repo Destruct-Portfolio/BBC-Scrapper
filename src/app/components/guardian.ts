@@ -5,7 +5,6 @@ import Hero from "@ulixee/hero";
 import Server from "@ulixee/server";
 import axios from "axios";
 import cheerio from "cheerio";
-import Save from "../cors/save.js";
 import Logger from "../misc/logger.js";
 import moment from "moment";
 
@@ -180,7 +179,7 @@ export default class TheGuardian {
             `Author: ${author} | Category: ${category} | Published: ${published}`
           );
         } catch (error) {
-          console.log(`${error}`);
+          /*  console.log(`${error}`); */
           continue;
         }
       }
