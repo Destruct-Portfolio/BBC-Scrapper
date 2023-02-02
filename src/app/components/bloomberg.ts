@@ -64,8 +64,8 @@ export default class BloombergNewsScrapper extends NewsScrapper {
 
             })
 
+            this.Logger.info('Navigating for each Link ... ')
             main: for (const [index, headline] of headlines.entries()) {
-                this.Logger.info('Navigating for each Link ... ')
 
                 if (!headline.link!.includes("https:")) headline.link = BloombergNewsScrapper.siteURL + headline.link
                 await this.$client.goto(headline.link!)
